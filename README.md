@@ -10,6 +10,7 @@ To use the setup on a single picture use the following code:
 % Create augmentedImageDatastore to automatically resize the image when image features are extracted using activations.
 
 imageSize = net.Layers(1).InputSize;
+
 ds = augmentedImageDatastore(imageSize, testImage, 'ColorPreprocessing', 'gray2rgb');
 
 % Extract image features using the CNN
