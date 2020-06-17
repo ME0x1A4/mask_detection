@@ -36,7 +36,7 @@ with open(INFILE) as csv_file:
             line_count += 1
             
 #            OUTPUT_BUFFER_FULL.append({"imageFilename":tmp_id,"face":tmp_full})
-            OUTPUT_BUFFER_FULL["imageFilename"].append("'"+LOCATION_PRE+tmp_id+"'")
+            OUTPUT_BUFFER_FULL["imageFilename"].append(LOCATION_PRE+tmp_id)
             OUTPUT_BUFFER_FULL["face"].append(tmp_full)
             
             

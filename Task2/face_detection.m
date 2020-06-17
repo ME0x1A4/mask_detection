@@ -1,25 +1,4 @@
-%Supporting Functions
-function data = augmentData(data)
-% Randomly flip images and bounding boxes horizontally.
-tform = randomAffine2d('XReflection',true);
-rout = affineOutputView(size(data{1}),tform);
-data{1} = imwarp(data{1},tform,'OutputView',rout);
-data{2} = bboxwarp(data{2},tform,rout);
-end
-
-function data = preprocessData(data,targetSize)
-% Resize image and bounding boxes to targetSize.
-scale = targetSize(1:2)./size(data{1},[1 2]);
-data{1} = imresize(data{1},targetSize(1:2));
-data{2} = bboxresize(data{2},scale);
-end
-
-
-
-
-load('onlyFaces.mat')
-data1 = struct2table(fullData);
-
+load('allFaces.mat')
 
 rng(0)
 shuffledIndices = randperm(height(data1));
@@ -61,7 +40,7 @@ featureExtractionNetwork = resnet50;
 featureLayer = 'activation_40_relu';
 
 %Define the number of classes to detect.
-numClasses = width(vehicleDataset)-1;
+numClasses = 1;
 %Create the Faster R-CNN object detection network.
 lgraph = fasterRCNNLayers(inputSize,numClasses,anchorBoxes,featureExtractionNetwork,featureLayer);
 
@@ -77,8 +56,8 @@ figure
 montage(augmentedData,'BorderSize',10)
 
 %Preprocess the augmented training data, and the validation data to prepare for training.
-trainingData = transform(augmentedTrainingData,@(data)preprocessData(data,inputSize));
-validationData = transform(validationData,@(data)preprocessData(data,inputSize));
+%trainingData = transform(augmentedTrainingData,@(data)preprocessData(data,inputSize));
+%validationData = transform(validationData,@(data)preprocessData(data,inputSize));
 %Read the preprocessed data.
 data = read(trainingData);
 
@@ -106,3 +85,19 @@ xlabel('Recall')
 ylabel('Precision')
 grid on
 title(sprintf('Average Precision = %.2f', ap))
+
+%Supporting Functions
+function data = augmentData(data)
+% Randomly flip images and bounding boxes horizontally.
+tform = randomAffine2d('XReflection',true);
+rout = affineOutputView(size(data{1}),tform);
+data{1} = imwarp(data{1},tform,'OutputView',rout);
+data{2} = bboxwarp(data{2},tform,rout);
+end
+
+function data = preprocessData(data,targetSize)
+% Resize image and bounding boxes to targetSize.
+scale = targetSize(1:2)./size(data{1},[1 2]);
+data{1} = imresize(data{1},targetSize(1:2));
+data{2} = bboxresize(data{2},scale);
+end
