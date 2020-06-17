@@ -34,6 +34,8 @@ Task2
 The Task2 folder contains a python script to convert the labels/bounding boxes from the dataset to a matlab compatible file. The matlab face_detection.m script then uses the data to train a faster R-CNN detector. For this, images are resized to 224x224 RGB and the first layers of the pretrained resnet50 network are used to improve training accuracy and speed. Also data augumentation is used to increase training set size. 
 It has to be noted that due to some unresoled bug the code cannot be executed on all matlab versions and further the labels/bounding boxes are probably still in a wrong format as it seems they are not detected correctly by matlab and result in a 0% accuracy training.
 
+Update: now the code is no longer executing the training but lables and boundingboxes seem to have the correct format now.
+
 Ressource for Task2:
 
 https://de.mathworks.com/help/vision/examples/object-detection-using-faster-r-cnn-deep-learning.html
