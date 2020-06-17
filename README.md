@@ -7,14 +7,16 @@ The Task1 folder contains a matlab(2020a) script which will use resnet50 for ima
 
 To use the setup on a single picture use the following code:
 
-% Create augmentedImageDatastore to automatically resize the image when
-% image features are extracted using activations.
+% Create augmentedImageDatastore to automatically resize the image when image features are extracted using activations.
+
 imageSize = net.Layers(1).InputSize;
 ds = augmentedImageDatastore(imageSize, testImage, 'ColorPreprocessing', 'gray2rgb');
 
 % Extract image features using the CNN
+
 imageFeatures = activations(net, ds, featureLayer, 'OutputAs', 'columns');
-Make a prediction using the classifier.
+
 
 % Make a prediction using the classifier
+
 predictedLabel = predict(classifier, imageFeatures, 'ObservationsIn', 'columns')
